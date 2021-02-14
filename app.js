@@ -21,7 +21,7 @@ const showImages = (images) => {
     images.forEach((image) => {
         let div = document.createElement('div');
         div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-        div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+        div.innerHTML = ` <img class="img-fluid img-thumbnail" id="selct-img"onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
         gallery.appendChild(div);
     });
 };
@@ -35,16 +35,26 @@ const getImages = (query) => {
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
+  
     let element = event.target;
     element.classList.add('added');
     
     let item = sliders.indexOf(img);
     if (item === -1) {
         sliders.push(img);
+        let select=document.getElementById("img-select").innerText;
+        let valueChang=parseInt(select);
+        let selectNumber=valueChang + 1;
+        document.getElementById("img-select").innerText=selectNumber;
+  
     }
     else {
       sliders.pop(img);
       element.classList.remove('added');
+      let select=document.getElementById("img-select").innerText;
+        let valueChang=parseInt(select);
+        let selectNumber=valueChang - 1;
+        document.getElementById("img-select").innerText=selectNumber;
       }
     //  else {
     //     alert('Hey, Already added !');
