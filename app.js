@@ -24,13 +24,13 @@ const showImages = (images) => {
         div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
         div.innerHTML = ` <img class="img-fluid img-thumbnail" id="selct-img"onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
         gallery.appendChild(div);
-        
+
     });
-  
+
 };
 
 const getImages = (query) => {
-  loadingSpinner();
+    loadingSpinner();
     fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
         .then((response) => response.json())
         .then((data) => showImages(data.hits))
@@ -39,28 +39,28 @@ const getImages = (query) => {
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
-  
+
     let element = event.target;
     element.classList.add('added');
-    
+
     let item = sliders.indexOf(img);
     if (item === -1) {
         sliders.push(img);
-        let select=document.getElementById("img-select").innerText;
-        let valueChang=parseInt(select);
-        let selectNumber=valueChang + 1;
-        document.getElementById("img-select").innerText=selectNumber;
-  
+        let select = document.getElementById("img-select").innerText;
+        let valueChang = parseInt(select);
+        let selectNumber = valueChang + 1;
+        document.getElementById("img-select").innerText = selectNumber;
+
     }
     else {
-      sliders.pop(img);
-      element.classList.remove('added');
-      let select=document.getElementById("img-select").innerText;
-        let valueChang=parseInt(select);
-        let selectNumber=valueChang - 1;
-        document.getElementById("img-select").innerText=selectNumber;
-      }
-    
+        sliders.splice(item, 1);
+        element.classList.remove('added');
+        let select = document.getElementById("img-select").innerText;
+        let valueChang = parseInt(select);
+        let selectNumber = valueChang - 1;
+        document.getElementById("img-select").innerText = selectNumber;
+    }
+
 };
 let timer;
 const createSlider = () => {
@@ -86,12 +86,12 @@ const createSlider = () => {
     sliders.forEach((slide) => {
         let item = document.createElement('div');
         item.className = 'slider-item';
-        if(duration>0){
-          item.innerHTML = `<img class="w-100"
+        if (duration > 0) {
+            item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
-        }else{
-          item.innerHTML=`<h2>
+        } else {
+            item.innerHTML = `<h2>
           Please give the slider number positive</h2>`
         }
         sliderContainer.appendChild(item);
@@ -147,13 +147,14 @@ search.addEventListener('keyup', function (e) {
     }
 });
 
-  sliderBtn.addEventListener('click', function () {
+sliderBtn.addEventListener('click', function () {
     createSlider();
-  });
-   const loadingSpinner=()=>{
-     const spinner =document.getElementById("loading-spnner");
-      spinner.classList.toggle('d-none');
-     
-     
-     
-   }
+});
+
+const loadingSpinner = () => {
+    const spinner = document.getElementById("loading-spnner");
+    spinner.classList.toggle('d-none');
+
+
+
+}
